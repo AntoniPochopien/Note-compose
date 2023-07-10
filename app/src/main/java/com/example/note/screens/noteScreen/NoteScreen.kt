@@ -1,7 +1,9 @@
 package com.example.note.screens.noteScreen
 
 import android.widget.Toast
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -24,6 +26,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -62,6 +65,7 @@ fun NoteScreen(
             )
         )
     }) {
+        val ctx = LocalContext.current
         Column(
             modifier = Modifier
                 .padding(it)
@@ -78,21 +82,22 @@ fun NoteScreen(
             Spacer(modifier = Modifier.height(8.dp))
 
             NoteButton(text = "Save", onClick = {
+
                 if (title.value.isNotEmpty() && description.value.isNotEmpty()) {
                     onAddNote(Note(title = title.value, description =  description.value))
                     title.value = ""
                     description.value = ""
-                    //Toast.makeText(context, text = "Note Added", Toast.LENGTH_SHORT)
+                    Toast.makeText( ctx, "Note Added", Toast.LENGTH_SHORT).show()
                 }
             })
             Divider(modifier = Modifier.padding(10.dp))
             LazyColumn{
-
                 items(notes){
-                    note -> NoteRow(note = note, onNoteClicked = {})
+                    note -> NoteRow(note = note, onNoteClicked = {onRemoveNote(note)})
                 }
             }
         }
     }
 }
+
 

@@ -27,14 +27,14 @@ fun NoteRow(modifier: Modifier = Modifier, note: Note, onNoteClicked: (Note) -> 
     ) {
         Column(
             modifier = modifier
-                .clickable { }
+                .clickable { onNoteClicked(note)}
                 .padding(horizontal = 14.dp, vertical = 6.dp),
             horizontalAlignment = Alignment.Start
         ) {
             Text(text = note.title, style = MaterialTheme.typography.headlineMedium)
             Text(text = note.description, style = MaterialTheme.typography.headlineSmall)
             Text(
-                text = note.entryDate.format(DateTimeFormatter.ofPattern("EEE, d MMM")),
+                text = "${note.entryDate.day}/${note.entryDate.month}/${note.entryDate.year}",
                 style = MaterialTheme.typography.bodyLarge
             )
         }
